@@ -56,7 +56,6 @@ class StatisticsUtilsTest {
     fun getActiveAndCompletedStats_tasks_null_returns_zero_zero() {
         val tasks = null
         val result = getActiveAndCompletedStats(tasks)
-        
         assertThat(result.completedTasksPercent, `is`(0f))
         assertThat(result.activeTasksPercent, `is`(0f))
     }

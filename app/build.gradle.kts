@@ -49,7 +49,6 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
-    testImplementation(libs.hamcrest.all)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     
@@ -67,5 +66,5 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
     implementation(libs.timber)
     
-    
+    testImplementation (libs.hamcrest)
 }
