@@ -35,7 +35,7 @@ class TasksFragment : Fragment() {
     private lateinit var viewDataBinding: TasksFragBinding
     
     private lateinit var listAdapter: TasksAdapter
-    
+    private var menuHost: MenuHost? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,15 +43,17 @@ class TasksFragment : Fragment() {
         viewDataBinding = TasksFragBinding.inflate(inflater, container, false).apply {
             viewmodel = viewModel
         }
-        val menuHost: MenuHost = requireActivity()
+        menuHost = requireActivity()
         
-        menuHost.addMenuProvider(object : MenuProvider {
+        menuHost?.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menu.clear()
                 menuInflater.inflate(R.menu.tasks_fragment_menu, menu)
             }
             
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
+                    
                     R.id.menu_clear -> {
                         viewModel.clearCompletedTasks()
                         true
@@ -76,6 +78,10 @@ class TasksFragment : Fragment() {
         return viewDataBinding.root
     }
     
+    override fun onDestroyView() {
+        super.onDestroyView()
+        menuHost = null
+    }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -87,8 +93,6 @@ class TasksFragment : Fragment() {
         setupFab()
     }
     
-    
-
     
     private fun setupNavigation() {
         viewModel.openTaskEvent.observe(viewLifecycleOwner, EventObserver {

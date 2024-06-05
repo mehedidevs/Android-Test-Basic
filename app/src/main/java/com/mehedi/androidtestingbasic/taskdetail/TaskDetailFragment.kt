@@ -66,6 +66,7 @@ class TaskDetailFragment : Fragment() {
         }
     }
     
+    private var menuHost: MenuHost? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -79,10 +80,10 @@ class TaskDetailFragment : Fragment() {
         
         viewModel.start(args.taskId)
         
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider {
+        menuHost = requireActivity()
+        menuHost?.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                
+                menu.clear()
                 menuInflater.inflate(R.menu.taskdetail_fragment_menu, menu)
             }
             
@@ -100,6 +101,11 @@ class TaskDetailFragment : Fragment() {
         
         
         return view
+    }
+    
+    override fun onDestroyView() {
+        super.onDestroyView()
+        menuHost = null
     }
     
     
